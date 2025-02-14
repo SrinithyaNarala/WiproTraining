@@ -1,0 +1,1738 @@
+3. Abstract Factory Pattern - Real-World Demo: Cross-Platform Furniture
+The Abstract Factory Pattern provides an interface for creating families of related or dependent objects without specifying their concrete classes. This is useful when the application needs to support different environments (e.g., creating different UI components for Windows and MacOS).
+
+Example: Cross-Platform Furniture (Abstract Factory Pattern)
+In this example, we will implement a cross-platform furniture system where we can create different types of furniture (e.g., Chair, Sofa) for different styles (e.g., Modern, Victorian).
+
+
+using System;
+
+// Abstract Product: Chair
+public interface IChair
+{
+    void SitOn();
+}
+
+// Abstract Product: Sofa
+public interface ISofa
+{
+    void LieOn();
+}
+
+// Concrete Product 1: Modern Chair
+public class ModernChair : IChair
+{
+    public void SitOn()
+    {
+        Console.WriteLine("Sitting on a modern chair.");
+    }
+}
+
+// Concrete Product 2: Victorian Chair
+public class VictorianChair : IChair
+{
+    public void SitOn()
+    {
+        Console.WriteLine("Sitting on a Victorian chair.");
+    }
+}
+
+// Concrete Product 3: Modern Sofa
+public class ModernSofa : ISofa
+{
+    public void LieOn()
+    {
+        Console.WriteLine("Lying on a modern sofa.");
+    }
+}
+
+// Concrete Product 4: Victorian Sofa
+public class VictorianSofa : ISofa
+{
+    public void LieOn()
+    {
+        Console.WriteLine("Lying on a Victorian sofa.");
+    }
+}
+
+// Abstract Factory
+public interface IFurnitureFactory
+{
+    IChair CreateChair();
+    ISofa CreateSofa();
+}
+
+// Concrete Factory 1: Modern Furniture Factory
+public class ModernFurnitureFactory : IFurnitureFactory
+{
+    public IChair CreateChair()
+    {
+        return new ModernChair();
+    }
+
+    public ISofa CreateSofa()
+    {
+        return new ModernSofa();
+    }
+}
+
+// Concrete Factory 2: Victorian Furniture Factory
+public class VictorianFurnitureFactory : IFurnitureFactory
+{
+    public IChair CreateChair()
+    {
+        return new VictorianChair();
+    }
+
+    public ISofa CreateSofa()
+    {
+        return new VictorianSofa();
+    }
+}
+
+// Client Code
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create Modern Furniture
+        IFurnitureFactory modernFactory = new ModernFurnitureFactory();
+        IChair modernChair = modernFactory.CreateChair();
+        ISofa modernSofa = modernFactory.CreateSofa();
+        modernChair.SitOn();
+        modernSofa.LieOn();
+
+        // Create Victorian Furniture
+        IFurnitureFactory victorianFactory = new VictorianFurnitureFactory();
+        IChair victorianChair = victorianFactory.CreateChair();
+        ISofa victorianSofa = victorianFactory.CreateSofa();
+        victorianChair.SitOn();
+        victorianSofa.LieOn();
+
+        Console.ReadLine();
+    }
+}
+
+
+Explanation:
+The IFurnitureFactory defines methods for creating related products like IChair and ISofa.
+ModernFurnitureFactory and VictorianFurnitureFactory are concrete factories that create Modern or Victorian furniture.
+The client code can easily switch between different styles of furniture without changing the implementation
+
+
+
+using System;
+
+// Abstract Product: Full-Time Employee
+public interface IFullTimeEmployee
+{
+    void WorkHours();
+    void CalculateSalary();
+}
+
+// Abstract Product: Part-Time Employee
+public interface IPartTimeEmployee
+{
+    void WorkHours();
+    void CalculateSalary();
+}
+
+// Concrete Product 1: Full-Time Developer
+public class FullTimeDeveloper : IFullTimeEmployee
+{
+    public void WorkHours()
+    {
+        Console.WriteLine("Full-Time Developer works 40 hours per week.");
+    }
+
+    public void CalculateSalary()
+    {
+        Console.WriteLine("Full-Time Developer's salary is $80,000 annually.");
+    }
+}
+
+// Concrete Product 2: Full-Time Designer
+public class FullTimeDesigner : IFullTimeEmployee
+{
+    public void WorkHours()
+    {
+        Console.WriteLine("Full-Time Designer works 40 hours per week.");
+    }
+
+    public void CalculateSalary()
+    {
+        Console.WriteLine("Full-Time Designer's salary is $70,000 annually.");
+    }
+}
+
+// Concrete Product 3: Part-Time Developer
+public class PartTimeDeveloper : IPartTimeEmployee
+{
+    public void WorkHours()
+    {
+        Console.WriteLine("Part-Time Developer works 20 hours per week.");
+    }
+
+    public void CalculateSalary()
+    {
+        Console.WriteLine("Part-Time Developer's salary is $40,000 annually.");
+    }
+}
+
+// Concrete Product 4: Part-Time Designer
+public class PartTimeDesigner : IPartTimeEmployee
+{
+    public void WorkHours()
+    {
+        Console.WriteLine("Part-Time Designer works 20 hours per week.");
+    }
+
+    public void CalculateSalary()
+    {
+        Console.WriteLine("Part-Time Designer's salary is $35,000 annually.");
+    }
+}
+
+// Abstract Factory
+public interface IEmployeeFactory
+{
+    IFullTimeEmployee CreateFullTimeEmployee();
+    IPartTimeEmployee CreatePartTimeEmployee();
+}
+
+// Concrete Factory 1: Developer Factory
+public class DeveloperFactory : IEmployeeFactory
+{
+    public IFullTimeEmployee CreateFullTimeEmployee()
+    {
+        return new FullTimeDeveloper();
+    }
+
+    public IPartTimeEmployee CreatePartTimeEmployee()
+    {
+        return new PartTimeDeveloper();
+    }
+}
+
+// Concrete Factory 2: Designer Factory
+public class DesignerFactory : IEmployeeFactory
+{
+    public IFullTimeEmployee CreateFullTimeEmployee()
+    {
+        return new FullTimeDesigner();
+    }
+
+    public IPartTimeEmployee CreatePartTimeEmployee()
+    {
+        return new PartTimeDesigner();
+    }
+}
+
+// Client Code
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create Developer Employees (Full-Time and Part-Time)
+        IEmployeeFactory developerFactory = new DeveloperFactory();
+        IFullTimeEmployee fullTimeDeveloper = developerFactory.CreateFullTimeEmployee();
+        IPartTimeEmployee partTimeDeveloper = developerFactory.CreatePartTimeEmployee();
+        fullTimeDeveloper.WorkHours();
+        fullTimeDeveloper.CalculateSalary();
+        partTimeDeveloper.WorkHours();
+        partTimeDeveloper.CalculateSalary();
+
+        // Create Designer Employees (Full-Time and Part-Time)
+        IEmployeeFactory designerFactory = new DesignerFactory();
+        IFullTimeEmployee fullTimeDesigner = designerFactory.CreateFullTimeEmployee();
+        IPartTimeEmployee partTimeDesigner = designerFactory.CreatePartTimeEmployee();
+        fullTimeDesigner.WorkHours();
+        fullTimeDesigner.CalculateSalary();
+        partTimeDesigner.WorkHours();
+        partTimeDesigner.CalculateSalary();
+
+        Console.ReadLine();
+    }
+}
+
+
+Structural Design Pattern 
+---------------------------
+The Adapter Design Pattern allows incompatible interfaces to work together. It acts as a bridge between two classes, adapting the interface of a class into another interface that the client expects. This is particularly useful when working with legacy code or external libraries that don’t match your system’s existing interfaces.
+
+Real-World Example: Adapter Pattern
+Let’s assume we are building an application for a media player that can play audio files. Initially, it only supports MP3 files, but now we need to extend it to support other formats like MP4 and VLC files without changing the existing code. We can use the Adapter Pattern to adapt the interface of new file formats into a format that our media player understands.
+
+create one folder with the name Day12Projects and in that write the command
+
+dotnet new console -o adapterdemo --use-program-main
+
+one by one check the codes and above main method class only add interfaces and other classes 
+    
+Code Example: Adapter Pattern in C#
+Step 1: Define the Target Interface (Existing Interface)
+This interface defines the common operation for playing audio files.
+
+// Target Interface: Media Player
+public interface IMediaPlayer
+{
+    void Play(string audioType, string fileName);
+}
+
+
+Step 2: Implement a Class for the Existing Functionality
+Here, we have a concrete class that implements IMediaPlayer and can only play MP3 files.
+
+
+// Concrete class for playing MP3 files
+public class AudioPlayer : IMediaPlayer
+{
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+
+
+Step 3: Define the Adaptee (New Functionality)
+These are the new classes that represent the media formats we want to adapt into our media player, such as VLC and MP4.
+
+// Class for playing VLC files
+public class VLCPlayer
+{
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+
+// Class for playing MP4 files
+public class MP4Player
+{
+    public void PlayMP4(string fileName)
+    {
+        Console.WriteLine("Playing MP4 file: " + fileName);
+    }
+}
+
+here i can implement IMediaPlayer
+    
+    public class VLCPlayer  : IMediaPlayer
+{
+    public void Play(string audioType, string fileName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+    
+    
+    
+    but it will create extra play method to me so that i am not implmenting because direct comtable method is not there 
+here through its individual method only i want to overrride 
+then what i am doing here is creating a media adapter here class which will implement IMediaPlayer only and include VLc and MP4 objects like this 
+
+    public class MediaAdapter : IMediaPlayer
+{
+    private VLCPlayer _vlcPlayer;
+    private MP4Player _mp4Player;
+
+
+
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "vlc")
+        {
+            _vlcPlayer = new VLCPlayer();
+            _vlcPlayer?.PlayVLC(fileName);
+        }
+        else if (audioType.ToLower() == "mp4")
+        {
+            _mp4Player = new MP4Player();
+            _mp4Player?.PlayMP4(fileName);
+        }
+    }
+}
+
+so the above method i will use in earlier AudioPlayer so that i can make it compatible to call vlc and mp4 play methods 
+so above method is modified 
+
+public class AudioPlayer : IMediaPlayer
+{
+    private MediaAdapter _mediaAdapter;
+  
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else if (audioType.ToLower() == "vlc" || audioType.ToLower() == "mp4")
+        {
+            _mediaAdapter = new MediaAdapter();
+            _mediaAdapter.Play(audioType, fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+
+Step 4: Create the Adapter Class
+The adapter will implement the IMediaPlayer interface and internally call the appropriate methods of the adaptee classes (VLCPlayer, MP4Player).
+
+
+Step 5: Modify the Existing Class to Use the Adapter
+
+
+Step 6: Client Code
+Here’s how the client can use the updated AudioPlayerWithAdapter to play various media formats.
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        IMediaPlayer mediaPlayer = new AudioPlayer();
+        // Playing various formats
+        mediaPlayer.Play("mp3", "song.mp3");
+        mediaPlayer.Play("mp4", "video.mp4");
+        mediaPlayer.Play("vlc", "movie.vlc");
+        mediaPlayer.Play("avi", "unsupported.avi");
+
+        Console.ReadLine();
+    }
+}
+
+final code 
+-------------
+namespace adapterdemo;
+public interface IMediaPlayer
+{
+    void Play(string audioType, string fileName);
+}
+public class AudioPlayer : IMediaPlayer
+{
+    private MediaAdapter _mediaAdapter;
+  
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else if (audioType.ToLower() == "vlc" || audioType.ToLower() == "mp4")
+        {
+            _mediaAdapter = new MediaAdapter();
+            _mediaAdapter.Play(audioType, fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+public class VLCPlayer 
+{
+
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+// Class for playing MP4 files
+public class MP4Player
+{
+    public void PlayMP4(string fileName)
+    {
+        Console.WriteLine("Playing MP4 file: " + fileName);
+    }
+}
+public class MediaAdapter : IMediaPlayer
+{
+    private VLCPlayer _vlcPlayer;
+    private MP4Player _mp4Player;
+
+
+
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "vlc")
+        {
+            _vlcPlayer = new VLCPlayer();
+            _vlcPlayer?.PlayVLC(fileName);
+        }
+        else if (audioType.ToLower() == "mp4")
+        {
+            _mp4Player = new MP4Player();
+            _mp4Player?.PlayMP4(fileName);
+        }
+    }
+}
+
+
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        IMediaPlayer mediaPlayer = new AudioPlayer();
+        // Playing various formats
+        mediaPlayer.Play("mp3", "song.mp3");
+        mediaPlayer.Play("mp4", "video.mp4");
+        mediaPlayer.Play("vlc", "movie.vlc");
+        mediaPlayer.Play("avi", "unsupported.avi");
+
+        Console.ReadLine();
+    }
+}
+
+
+
+Explanation:
+Target Interface (IMediaPlayer):
+
+The IMediaPlayer interface defines the method Play(), which the client uses to play audio files. This interface is what the client expects to work with.
+Adaptee (VLCPlayer, MP4Player):
+
+These are the new classes that need to be adapted to fit into the existing system. They have their own methods (PlayVLC, PlayMP4) that don’t match the IMediaPlayer interface.
+Adapter (MediaAdapter):
+
+The adapter implements the IMediaPlayer interface and internally delegates the calls to the correct adaptee (VLCPlayer or MP4Player). This allows the new media formats to be played using the same interface that the client is already using.
+Client (AudioPlayerWithAdapter):
+
+The AudioPlayerWithAdapter class can now handle new file formats by delegating to the MediaAdapter when it encounters a file format other than MP3. The client code remains unchanged.
+
+Decorator pattern 
+------------------
+The Decorator Pattern allows behavior to be added to individual objects, dynamically, without affecting the behavior of other objects from the same class. It's a structural pattern that provides a flexible alternative to subclassing for extending functionality.
+
+Real-World Example: Coffee Shop with Decorator Pattern
+Imagine a coffee shop where you can order different types of coffee, and then add extra options like milk, sugar, or caramel. The base coffee is one type, but you can decorate it with different add-ons dynamically, such as sugar or milk, without needing to create subclasses for each possible combination.
+
+Let’s implement this example using the Decorator Pattern.
+
+Code Example: Decorator Pattern in C#
+
+Step 1: Define the Component Interface (Base Coffee)
+This interface defines the basic operation that all coffee types must implement.
+
+// Component Interface: Coffee
+public interface ICoffee
+{
+    string GetDescription();
+    double GetCost();
+}
+
+
+Step 2: Implement the Concrete Component (Simple Coffee)
+
+This is the concrete class that represents the basic type of coffee, without any add-ons.
+
+// Concrete Component: Simple Coffee
+public class SimpleCoffee : ICoffee
+{
+    public string GetDescription()
+    {
+        return "Simple Coffee";
+    }
+
+    public double GetCost()
+    {
+        return 5.00; // Base price of a simple coffee
+    }
+}
+
+
+Step 3: Define the Decorator Class
+This abstract class implements the ICoffee interface and contains a reference to an instance of ICoffee, which can be the base coffee or another decorator. It forwards requests to the object it decorates.
+
+// Abstract Decorator: CoffeeDecorator
+public abstract class CoffeeDecorator : ICoffee
+{
+    protected ICoffee _coffee;
+
+    // Constructor to set the component being decorated
+    public CoffeeDecorator(ICoffee coffee)
+    {
+        _coffee = coffee;
+    }
+
+    public virtual string GetDescription()
+    {
+        return _coffee.GetDescription();
+    }
+
+    public virtual double GetCost()
+    {
+        return _coffee.GetCost();
+    }
+}
+
+
+Step 4: Implement Concrete Decorators
+Now, let's create concrete decorators for adding extras to the coffee, like milk or sugar.
+
+// Concrete Decorator 1: Milk
+public class MilkDecorator : CoffeeDecorator
+{
+    public MilkDecorator(ICoffee coffee) : base(coffee) { }
+
+    public override string GetDescription()
+    {
+        return _coffee.GetDescription() + ", Milk";
+    }
+
+    public override double GetCost()
+    {
+        return _coffee.GetCost() + 1.50; // Milk costs an additional $1.50
+    }
+}
+
+// Concrete Decorator 2: Sugar
+public class SugarDecorator : CoffeeDecorator
+{
+    public SugarDecorator(ICoffee coffee) : base(coffee) { }
+
+    public override string GetDescription()
+    {
+        return _coffee.GetDescription() + ", Sugar";
+    }
+
+    public override double GetCost()
+    {
+        return _coffee.GetCost() + 0.50; // Sugar costs an additional $0.50
+    }
+}
+
+// Concrete Decorator 3: Caramel
+public class CaramelDecorator : CoffeeDecorator
+{
+    public CaramelDecorator(ICoffee coffee) : base(coffee) { }
+
+    public override string GetDescription()
+    {
+        return _coffee.GetDescription() + ", Caramel";
+    }
+
+    public override double GetCost()
+    {
+        return _coffee.GetCost() + 2.00; // Caramel costs an additional $2.00
+    }
+}
+
+
+Step 5: Client Code
+The client can now create a simple coffee and dynamically add different decorators to it, such as milk, sugar, and caramel, without modifying the original coffee class.
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Order a simple coffee
+        ICoffee myCoffee = new SimpleCoffee();
+        Console.WriteLine($"{myCoffee.GetDescription()} costs ${myCoffee.GetCost()}");
+
+        // Add milk to the coffee
+        myCoffee = new MilkDecorator(myCoffee);
+        Console.WriteLine($"{myCoffee.GetDescription()} costs ${myCoffee.GetCost()}");
+
+        // Add sugar to the coffee
+        myCoffee = new SugarDecorator(myCoffee);
+        Console.WriteLine($"{myCoffee.GetDescription()} costs ${myCoffee.GetCost()}");
+
+        // Add caramel to the coffee
+        myCoffee = new CaramelDecorator(myCoffee);
+        Console.WriteLine($"{myCoffee.GetDescription()} costs ${myCoffee.GetCost()}");
+
+        Console.ReadLine();
+    }
+}
+
+
+output 
+------
+Simple Coffee costs $5
+Simple Coffee, Milk costs $6.5
+Simple Coffee, Milk, Sugar costs $7
+Simple Coffee, Milk, Sugar, Caramel costs $9
+
+
+Explanation:
+Component Interface (ICoffee):
+
+The ICoffee interface defines the methods GetDescription() and GetCost(), which all coffee and decorator classes must implement.
+Concrete Component (SimpleCoffee):
+
+Represents the base type of coffee, without any additional toppings or decorations.
+Abstract Decorator (CoffeeDecorator):
+
+Implements the ICoffee interface and forwards requests to the underlying object (in this case, either a coffee or another decorator).
+Concrete Decorators (MilkDecorator, SugarDecorator, CaramelDecorator):
+
+Each concrete decorator adds new functionality (like adding milk, sugar, or caramel) to the base coffee and also increases the cost.
+Client (Program):
+
+The client starts with a simple coffee and then decorates it dynamically by adding milk, sugar, and caramel. Each decorator adds new behavior and cost to the coffee.
+
+Composite pattern 
+--------------------
+The Composite Pattern is a structural design pattern that allows you to compose objects into tree-like structures to represent part-whole hierarchies. It allows individual objects and compositions of objects to be treated uniformly. This pattern is particularly useful when you need to work with hierarchical data, such as folders and files in a filesystem.
+
+Real-World Example: Composite Pattern in a Company Structure
+Let’s assume we are building a company organization system. A company is made up of various departments, and each department may have employees. A department itself may contain multiple sub-departments, and each of these can also have employees. In this scenario, the Composite Pattern allows us to treat individual employees and departments uniformly, since both employees and departments can be components of the organization.
+
+Code Example: Composite Pattern in C#
+
+Step 1: Define the Component Interface
+The component interface defines the common operations that can be performed on both individual employees and departments.
+
+// Component Interface: Company Component
+public interface ICompanyComponent
+{
+    string GetName();
+    void DisplayDetails();
+}
+
+
+Step 2: Implement the Leaf (Individual Employee)
+The Employee class is the leaf in the composite structure, representing individual employees.
+
+// Leaf: Employee
+public class Employee : ICompanyComponent
+{
+    private string _name;
+    private string _position;
+
+    public Employee(string name, string position)
+    {
+        _name = name;
+        _position = position;
+    }
+
+    public string GetName()
+    {
+        return _name;
+    }
+
+    public void DisplayDetails()
+    {
+        Console.WriteLine($"Employee: {_name}, Position: {_position}");
+    }
+}
+
+
+Step 3: Implement the Composite (Department)
+
+The Department class is the composite, which can contain other departments (sub-departments) or employees. It manages a collection of ICompanyComponent objects, which can be either individual employees or other departments.
+
+// Composite: Department
+public class Department : ICompanyComponent
+{
+    private string _name;
+    private List<ICompanyComponent> _subordinates = new List<ICompanyComponent>();
+
+    public Department(string name)
+    {
+        _name = name;
+    }
+
+    public string GetName()
+    {
+        return _name;
+    }
+
+    // Add an employee or department to the department
+    public void AddSubordinate(ICompanyComponent component)
+    {
+        _subordinates.Add(component);
+    }
+
+    // Remove an employee or department from the department
+    public void RemoveSubordinate(ICompanyComponent component)
+    {
+        _subordinates.Remove(component);
+    }
+
+    // Display details of the department and its subordinates
+    public void DisplayDetails()
+    {
+        Console.WriteLine($"Department: {_name}");
+        foreach (var component in _subordinates)
+        {
+            component.DisplayDetails();
+        }
+    }
+}
+
+
+Step 4: Client Code
+The client can now create departments and employees, and combine them to form a hierarchical structure of the organization.
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create individual employees
+        ICompanyComponent emp1 = new Employee("John Doe", "Developer");
+        ICompanyComponent emp2 = new Employee("Jane Smith", "Manager");
+        ICompanyComponent emp3 = new Employee("Michael Johnson", "HR");
+        ICompanyComponent emp4 = new Employee("Emily Davis", "Tester");
+
+        // Create departments
+        Department softwareDept = new Department("Software Development Department");
+        Department hrDept = new Department("Human Resources Department");
+
+        // Add employees to departments
+        softwareDept.AddSubordinate(emp1);
+        softwareDept.AddSubordinate(emp4);
+
+        hrDept.AddSubordinate(emp2);
+        hrDept.AddSubordinate(emp3);
+
+        // Create the root department (the entire company)
+        Department company = new Department("Company XYZ");
+
+        // Add departments to the company
+        company.AddSubordinate(softwareDept);
+        company.AddSubordinate(hrDept);
+
+        // Display the entire company structure
+        company.DisplayDetails();
+
+        Console.ReadLine();
+    }
+}
+
+Explanation:
+Component Interface (ICompanyComponent):
+
+This defines the common methods for both Employees and Departments. Both components must implement GetName() and DisplayDetails() methods.
+Leaf (Employee):
+
+The Employee class is the leaf in the composite structure, representing individual employees. It implements the ICompanyComponent interface.
+Composite (Department):
+
+The Department class is the composite that can contain other departments or employees. It implements the ICompanyComponent interface and manages a list of subordinates, which can be employees or other departments.
+Client (Program):
+
+The client creates an entire company structure by composing departments and employees. The client code treats both employees and departments uniformly because they both implement the ICompanyComponent interface.
+
+output 
+
+Department: Company XYZ
+Department: Software Development Department
+Employee: John Doe, Position: Developer
+Employee: Emily Davis, Position: Tester
+Department: Human Resources Department
+Employee: Jane Smith, Position: Manager
+Employee: Michael Johnson, Position: HR
+
+
+
+
+
+Behvaviour patterns
+------------------
+
+Observer pattern 
+---------------
+
+
+The Adapter Design Pattern allows incompatible interfaces to work together. It acts as a bridge between two classes, adapting the interface of a class into another interface that the client expects. This is particularly useful when working with legacy code or external libraries that don’t match your system’s existing interfaces.
+
+Real-World Example: Adapter Pattern
+Let’s assume we are building an application for a media player that can play audio files. Initially, it only supports MP3 files, but now we need to extend it to support other formats like MP4 and VLC files without changing the existing code. We can use the Adapter Pattern to adapt the interface of new file formats into a format that our media player understands.
+
+create one folder with the name Day12Projects and in that write the command
+
+dotnet new console -o adapterdemo --use-program-main
+
+one by one check the codes and above main method class only add interfaces and other classes 
+    
+Code Example: Adapter Pattern in C#
+Step 1: Define the Target Interface (Existing Interface)
+This interface defines the common operation for playing audio files.
+
+// Target Interface: Media Player
+public interface IMediaPlayer
+{
+    void Play(string audioType, string fileName);
+}
+
+
+Step 2: Implement a Class for the Existing Functionality
+Here, we have a concrete class that implements IMediaPlayer and can only play MP3 files.
+
+
+// Concrete class for playing MP3 files
+public class AudioPlayer : IMediaPlayer
+{
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+
+
+Step 3: Define the Adaptee (New Functionality)
+These are the new classes that represent the media formats we want to adapt into our media player, such as VLC and MP4.
+
+// Class for playing VLC files
+public class VLCPlayer
+{
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+
+// Class for playing MP4 files
+public class MP4Player
+{
+    public void PlayMP4(string fileName)
+    {
+        Console.WriteLine("Playing MP4 file: " + fileName);
+    }
+}
+
+here i can implement IMediaPlayer
+    
+    public class VLCPlayer  : IMediaPlayer
+{
+    public void Play(string audioType, string fileName)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+    
+    
+    
+    but it will create extra play method to me so that i am not implmenting because direct comtable method is not there 
+here through its individual method only i want to overrride 
+then what i am doing here is creating a media adapter here class which will implement IMediaPlayer only and include VLc and MP4 objects like this 
+
+    public class MediaAdapter : IMediaPlayer
+{
+    private VLCPlayer _vlcPlayer;
+    private MP4Player _mp4Player;
+
+
+
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "vlc")
+        {
+            _vlcPlayer = new VLCPlayer();
+            _vlcPlayer?.PlayVLC(fileName);
+        }
+        else if (audioType.ToLower() == "mp4")
+        {
+            _mp4Player = new MP4Player();
+            _mp4Player?.PlayMP4(fileName);
+        }
+    }
+}
+
+so the above method i will use in earlier AudioPlayer so that i can make it compatible to call vlc and mp4 play methods 
+so above method is modified 
+
+public class AudioPlayer : IMediaPlayer
+{
+    private MediaAdapter _mediaAdapter;
+  
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else if (audioType.ToLower() == "vlc" || audioType.ToLower() == "mp4")
+        {
+            _mediaAdapter = new MediaAdapter();
+            _mediaAdapter.Play(audioType, fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+
+Step 4: Create the Adapter Class
+The adapter will implement the IMediaPlayer interface and internally call the appropriate methods of the adaptee classes (VLCPlayer, MP4Player).
+
+
+Step 5: Modify the Existing Class to Use the Adapter
+
+
+Step 6: Client Code
+Here’s how the client can use the updated AudioPlayerWithAdapter to play various media formats.
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        IMediaPlayer mediaPlayer = new AudioPlayer();
+        // Playing various formats
+        mediaPlayer.Play("mp3", "song.mp3");
+        mediaPlayer.Play("mp4", "video.mp4");
+        mediaPlayer.Play("vlc", "movie.vlc");
+        mediaPlayer.Play("avi", "unsupported.avi");
+
+        Console.ReadLine();
+    }
+}
+
+final code 
+-------------
+namespace adapterdemo;
+public interface IMediaPlayer
+{
+    void Play(string audioType, string fileName);
+}
+public class AudioPlayer : IMediaPlayer
+{
+    private MediaAdapter _mediaAdapter;
+  
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "mp3")
+        {
+            Console.WriteLine("Playing mp3 file: " + fileName);
+        }
+        else if (audioType.ToLower() == "vlc" || audioType.ToLower() == "mp4")
+        {
+            _mediaAdapter = new MediaAdapter();
+            _mediaAdapter.Play(audioType, fileName);
+        }
+        else
+        {
+            Console.WriteLine($"Invalid media: {audioType} format not supported.");
+        }
+    }
+}
+public class VLCPlayer 
+{
+
+    public void PlayVLC(string fileName)
+    {
+        Console.WriteLine("Playing VLC file: " + fileName);
+    }
+}
+// Class for playing MP4 files
+public class MP4Player
+{
+    public void PlayMP4(string fileName)
+    {
+        Console.WriteLine("Playing MP4 file: " + fileName);
+    }
+}
+public class MediaAdapter : IMediaPlayer
+{
+    private VLCPlayer _vlcPlayer;
+    private MP4Player _mp4Player;
+
+
+
+    public void Play(string audioType, string fileName)
+    {
+        if (audioType.ToLower() == "vlc")
+        {
+            _vlcPlayer = new VLCPlayer();
+            _vlcPlayer?.PlayVLC(fileName);
+        }
+        else if (audioType.ToLower() == "mp4")
+        {
+            _mp4Player = new MP4Player();
+            _mp4Player?.PlayMP4(fileName);
+        }
+    }
+}
+
+
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        IMediaPlayer mediaPlayer = new AudioPlayer();
+        // Playing various formats
+        mediaPlayer.Play("mp3", "song.mp3");
+        mediaPlayer.Play("mp4", "video.mp4");
+        mediaPlayer.Play("vlc", "movie.vlc");
+        mediaPlayer.Play("avi", "unsupported.avi");
+
+        Console.ReadLine();
+    }
+}
+
+
+
+Explanation:
+Target Interface (IMediaPlayer):
+
+The IMediaPlayer interface defines the method Play(), which the client uses to play audio files. This interface is what the client expects to work with.
+Adaptee (VLCPlayer, MP4Player):
+
+These are the new classes that need to be adapted to fit into the existing system. They have their own methods (PlayVLC, PlayMP4) that don’t match the IMediaPlayer interface.
+Adapter (MediaAdapter):
+
+The adapter implements the IMediaPlayer interface and internally delegates the calls to the correct adaptee (VLCPlayer or MP4Player). This allows the new media formats to be played using the same interface that the client is already using.
+Client (AudioPlayerWithAdapter):
+
+The AudioPlayerWithAdapter class can now handle new file formats by delegating to the MediaAdapter when it encounters a file format other than MP3. The client code remains unchanged.
+
+Observer pattern 
+-------------------
+The Observer Pattern is a behavioral design pattern that defines a one-to-many relationship between objects so that when one object (the subject) changes state, all its dependents (called observers) are notified and updated automatically.
+
+In C#, you can implement the Observer pattern by defining a subject (which holds a list of observers) and the observers themselves, which are notified when the subject changes.
+
+Components of the Observer Pattern:
+Subject: The entity that holds the state and notifies observers of state changes.
+Observers: These are interested entities that get notified when the subject's state changes.
+ConcreteSubject: A specific implementation of the subject that changes state and notifies observers.
+ConcreteObserver: A specific implementation of an observer that reacts to state changes.
+Example: Stock Market Application
+In this example, a Stock class acts as the subject, and multiple Investors act as observers. When the stock price changes, all registered investors are notified.
+first from the main folder Day12Projects write the follwing command
+
+dotnet new console -o observerdemo --use-program-main
+Imagine one class stock class is there like this 
+
+    namespace observerdemo;
+public class Stock
+{
+
+    private string _symbol;
+    private double _price;
+
+    public Stock(string symbol, double price)
+    {
+        _symbol = symbol;
+        _price = price;
+    }
+
+    public string Symbol => _symbol;
+
+
+
+
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Stock appleStock = new Stock("AAPL", 120.00);
+    }
+}
+
+Next thing to crreate is investor who will buy the stocks means above class any update i do will do though IInvestor 
+
+public interface IInvestor
+{
+    void Update(Stock stock);
+}
+
+after adding this interface still build and run are done proeprly 
+another inerface i will create now which will take above inestor interface so this also i will add it now 
+
+    public interface IStock
+{
+    void RegisterObserver(IInvestor investor);
+    void RemoveObserver(IInvestor investor);
+    void NotifyObservers();
+}
+after adding again build and run i will do 
+    so till now it if fine now now Stock class will implment IStock interface which is having another interface IInvestor which throgh 
+        IStock interface only i will use it and i declare list of inversors also here like this so change in Stock class is like this 
+and new stock class will be like this 
+
+    public class Stock: IStock
+{
+    private List<IInvestor> _investors = new List<IInvestor>();
+    private string _symbol;
+    private double _price;
+
+    public Stock(string symbol, double price)
+    {
+        _symbol = symbol;
+        _price = price;
+    }
+
+    public string Symbol => _symbol;
+
+    public double Price
+    {
+        get => _price;
+        set
+        {
+            if (_price != value)
+            {
+                _price = value;
+                NotifyObservers();
+            }
+        }
+    }
+    public void NotifyObservers()
+    {
+        foreach (var investor in _investors)
+        {
+            investor.Update(this);
+        }
+    }
+    public void RegisterObserver(IInvestor investor)
+    {
+        _investors.Add(investor);
+    }
+
+    public void RemoveObserver(IInvestor investor)
+    {
+        _investors.Remove(investor);
+    }
+
+
+
+}
+
+finally herei do build and run again working fine 
+and till now full code is like this
+
+    namespace observerdemo;
+public interface IInvestor
+{
+    void Update(Stock stock);
+}
+public interface IStock
+{
+    void RegisterObserver(IInvestor investor);
+    void RemoveObserver(IInvestor investor);
+    void NotifyObservers();
+}
+
+public class Stock : IStock
+{
+    private List<IInvestor> _investors = new List<IInvestor>();
+    private string _symbol;
+    private double _price;
+
+    public Stock(string symbol, double price)
+    {
+        _symbol = symbol;
+        _price = price;
+    }
+
+    public string Symbol => _symbol;
+
+    public double Price
+    {
+        get => _price;
+        set
+        {
+            if (_price != value)
+            {
+                _price = value;
+                NotifyObservers();
+            }
+        }
+    }
+    public void NotifyObservers()
+    {
+        foreach (var investor in _investors)
+        {
+            investor.Update(this);
+        }
+    }
+    public void RegisterObserver(IInvestor investor)
+    {
+        _investors.Add(investor);
+    }
+
+    public void RemoveObserver(IInvestor investor)
+    {
+        _investors.Remove(investor);
+    }
+
+
+
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Stock appleStock = new Stock("AAPL", 120.00);
+    }
+}
+
+Now i will create investor concrete class which will implement IInvestor 
+
+    public class Investor : IInvestor
+{
+    private string _name;
+
+    public Investor(string name)
+    {
+        _name = name;
+    }
+
+    public void Update(Stock stock)
+    {
+        Console.WriteLine($"Notified {_name} of {stock.Symbol}'s price change to {stock.Price:C}");
+    }
+}
+
+Now again i will build and run no erros till now 
+
+
+now in main method i will do like this 
+
+    static void Main(string[] args)
+    {
+        // Create a stock and investors
+        Stock appleStock = new Stock("AAPL", 120.00);
+        Investor investor1 = new Investor("John Doe");
+        Investor investor2 = new Investor("Jane Smith");
+        // Register the investors (observers) with the stock (subject)
+        appleStock.RegisterObserver(investor1);
+        appleStock.RegisterObserver(investor2);
+
+        // Change the stock price (this will notify the observers)
+        appleStock.Price = 121.00;
+        appleStock.Price = 123.50;
+
+        // Remove one investor and change the price again
+        appleStock.RemoveObserver(investor1);
+        appleStock.Price = 125.75;
+
+
+    }
+
+
+total final code is here 
+
+----------------------------
+
+    namespace observerdemo;
+public interface IInvestor
+{
+    void Update(Stock stock);
+}
+public interface IStock
+{
+    void RegisterObserver(IInvestor investor);
+    void RemoveObserver(IInvestor investor);
+    void NotifyObservers();
+}
+
+public class Stock : IStock
+{
+    private List<IInvestor> _investors = new List<IInvestor>();
+    private string _symbol;
+    private double _price;
+
+    public Stock(string symbol, double price)
+    {
+        _symbol = symbol;
+        _price = price;
+    }
+
+    public string Symbol => _symbol;
+
+    public double Price
+    {
+        get => _price;
+        set
+        {
+            if (_price != value)
+            {
+                _price = value;
+                NotifyObservers();
+            }
+        }
+    }
+    public void NotifyObservers()
+    {
+        foreach (var investor in _investors)
+        {
+            investor.Update(this);
+        }
+    }
+    public void RegisterObserver(IInvestor investor)
+    {
+        _investors.Add(investor);
+    }
+
+    public void RemoveObserver(IInvestor investor)
+    {
+        _investors.Remove(investor);
+    }
+
+
+
+}
+
+public class Investor : IInvestor
+{
+    private string _name;
+
+    public Investor(string name)
+    {
+        _name = name;
+    }
+
+    public void Update(Stock stock)
+    {
+        Console.WriteLine($"Notified {_name} of {stock.Symbol}'s price change to {stock.Price:C}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Create a stock and investors
+        Stock appleStock = new Stock("AAPL", 120.00);
+        Investor investor1 = new Investor("John Doe");
+        Investor investor2 = new Investor("Jane Smith");
+        // Register the investors (observers) with the stock (subject)
+        appleStock.RegisterObserver(investor1);
+        appleStock.RegisterObserver(investor2);
+
+        // Change the stock price (this will notify the observers)
+        appleStock.Price = 121.00;
+        appleStock.Price = 123.50;
+
+        // Remove one investor and change the price again
+        appleStock.RemoveObserver(investor1);
+        appleStock.Price = 125.75;
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+Strategy pattern 
+------------------
+
+
+The Strategy Pattern is a behavioral design pattern that allows a family of algorithms to be defined and encapsulated as separate classes, so that they can be used interchangeably. This pattern lets the algorithm vary independently from clients that use it.
+
+Components of the Strategy Pattern:
+Strategy Interface: Defines a common interface for all algorithms.
+Concrete Strategies: Implement different algorithms that the strategy interface defines.
+Context: Maintains a reference to the strategy and allows the client to set or change the strategy dynamically.
+Example: Payment Processing System
+Let's say you have an e-commerce application that supports multiple payment methods (credit card, PayPal, and bank transfer). You can use the Strategy pattern to define different payment strategies and switch between them without modifying the existing code.
+
+Step-by-Step Implementation:
+
+1)Define the Strategy Interface:
+
+public interface IPaymentStrategy
+{
+    void Pay(decimal amount);
+}
+
+
+2)Concrete Strategies:
+
+// Credit Card payment strategy
+public class CreditCardPayment : IPaymentStrategy
+{
+    private string _cardNumber;
+
+    public CreditCardPayment(string cardNumber)
+    {
+        _cardNumber = cardNumber;
+    }
+
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using Credit Card ({_cardNumber}).");
+    }
+}
+
+// PayPal payment strategy
+public class PayPalPayment : IPaymentStrategy
+{
+    private string _email;
+
+    public PayPalPayment(string email)
+    {
+        _email = email;
+    }
+
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using PayPal (Email: {_email}).");
+    }
+}
+
+// Bank Transfer payment strategy
+public class BankTransferPayment : IPaymentStrategy
+{
+    private string _bankAccount;
+
+    public BankTransferPayment(string bankAccount)
+    {
+        _bankAccount = bankAccount;
+    }
+
+    public void Pay(decimal amount)
+    {
+        Console.WriteLine($"Paid {amount:C} using Bank Transfer (Account: {_bankAccount}).");
+    }
+}
+
+
+3.Context 
+
+public class ShoppingCart
+{
+    private IPaymentStrategy _paymentStrategy;
+
+    public void SetPaymentStrategy(IPaymentStrategy paymentStrategy)
+    {
+        _paymentStrategy = paymentStrategy;
+    }
+
+    public void Checkout(decimal amount)
+    {
+        if (_paymentStrategy == null)
+        {
+            Console.WriteLine("Payment method not set.");
+        }
+        else
+        {
+            _paymentStrategy.Pay(amount);
+        }
+    }
+}
+
+
+4.Using the Strategy Pattern:
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        ShoppingCart cart = new ShoppingCart();
+
+        // Customer selects PayPal as payment method
+        cart.SetPaymentStrategy(new PayPalPayment("customer@example.com"));
+        cart.Checkout(100.00m); // Output: Paid $100.00 using PayPal (Email: customer@example.com).
+
+        // Customer changes payment method to Credit Card
+        cart.SetPaymentStrategy(new CreditCardPayment("1234-5678-9876-5432"));
+        cart.Checkout(250.50m); // Output: Paid $250.50 using Credit Card (1234-5678-9876-5432).
+
+        // Customer changes payment method to Bank Transfer
+        cart.SetPaymentStrategy(new BankTransferPayment("AC-123456789"));
+        cart.Checkout(500.00m); // Output: Paid $500.00 using Bank Transfer (Account: AC-123456789).
+    }
+}
+
+
+Explanation:
+IPaymentStrategy is the common interface for all payment methods. It defines a Pay method that each concrete strategy will implement.
+Concrete Strategies (CreditCardPayment, PayPalPayment, and BankTransferPayment) provide specific implementations of how to process payments.
+ShoppingCart (Context) interacts with the chosen payment strategy. The SetPaymentStrategy method allows you to set or change the strategy at runtime.
+
+output 
+------------
+
+Paid $100.00 using PayPal (Email: customer@example.com).
+Paid $250.50 using Credit Card (1234-5678-9876-5432).
+Paid $500.00 using Bank Transfer (Account: AC-123456789).
+
+
+Command pattern 
+------------------
+The Command Pattern is a behavioral design pattern in which requests are encapsulated as objects, allowing for parameterization of clients with queues, logs, and callbacks. This pattern is useful when you want to decouple the sender of a request from the object that executes the request.
+
+Components of the Command Pattern:
+Command Interface: Declares an interface for executing an operation.
+Concrete Command: Implements the command interface by performing an action on a receiver.
+Receiver: The object that performs the actual operation.
+Invoker: Responsible for initiating the command.
+Client: The object that creates a command and sets the receiver.
+Example: Smart Home Automation
+In this example, we create a home automation system where you can control lights, fans, and other devices through commands. The commands will be encapsulated and executed by the invoker.
+
+Step-by-Step Implementation:
+1)Define the Command Interface:
+
+public interface ICommand
+{
+    void Execute();
+    void Undo();
+}
+
+2) Concrete Command Implementations:
+
+// Command to turn the light on
+public class LightOnCommand : ICommand
+{
+    private Light _light;
+
+    public LightOnCommand(Light light)
+    {
+        _light = light;
+    }
+
+    public void Execute()
+    {
+        _light.TurnOn();
+    }
+
+    public void Undo()
+    {
+        _light.TurnOff();
+    }
+}
+
+// Command to turn the light off
+public class LightOffCommand : ICommand
+{
+    private Light _light;
+
+    public LightOffCommand(Light light)
+    {
+        _light = light;
+    }
+
+    public void Execute()
+    {
+        _light.TurnOff();
+    }
+
+    public void Undo()
+    {
+        _light.TurnOn();
+    }
+}
+
+
+3 The Receiver (Light):
+
+public class Light
+{
+    public void TurnOn()
+    {
+        Console.WriteLine("The light is on.");
+    }
+
+    public void TurnOff()
+    {
+        Console.WriteLine("The light is off.");
+    }
+}
+
+
+4.Invoker:
+
+public class RemoteControl
+{
+    private ICommand _command;
+
+    public void SetCommand(ICommand command)
+    {
+        _command = command;
+    }
+
+    public void PressButton()
+    {
+        _command.Execute();
+    }
+
+    public void PressUndo()
+    {
+        _command.Undo();
+    }
+}
+
+
+5.Client:
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Receiver
+        Light livingRoomLight = new Light();
+
+        // Concrete Commands
+        ICommand lightOn = new LightOnCommand(livingRoomLight);
+        ICommand lightOff = new LightOffCommand(livingRoomLight);
+
+        // Invoker
+        RemoteControl remote = new RemoteControl();
+
+        // Turn the light on
+        remote.SetCommand(lightOn);
+        remote.PressButton();  // Output: The light is on.
+
+        // Turn the light off
+        remote.SetCommand(lightOff);
+        remote.PressButton();  // Output: The light is off.
+
+        // Undo last operation (turn the light back on)
+        remote.PressUndo();    // Output: The light is on.
+    }
+}
+
+
+Explanation:
+ICommand defines the Execute and Undo operations. This interface is implemented by concrete commands like LightOnCommand and LightOffCommand.
+Concrete Commands (LightOnCommand and LightOffCommand) encapsulate the actions that the receiver will perform. They implement the Execute method to perform an operation and Undo to reverse it.
+Light (Receiver) is the object that performs the actual operation. It contains methods like TurnOn and TurnOff.
+RemoteControl (Invoker) triggers the command by calling the Execute method. It can also reverse the last action with the Undo method.
+The Client creates the concrete commands and sets them in the invoker, allowing the user to interact with the remote control to trigger actions on the light.
+
+
+
+The light is on.
+The light is off.
+The light is on.
+
+
+
