@@ -1,5 +1,5 @@
-create database Wipro4;
-use Wipro4;
+create database Wipro;
+use Wipro;
 
 create table Student (studid int primary key ,
 studname varchar(30),location varchar(40));
@@ -182,4 +182,34 @@ insert into empinfo values(1004,'suresh',50) --error because 50 dept is not ther
 -- now the requirment is create three tables doctor ,pateint and tratement here doctor is master table of 
 -- pateint for in tratemment both doctor and pateint is involved so two fk is needed one is doctor another is patient
 
--- Table: DoctorCREATE TABLE Doctor (    Doctor_ID INT PRIMARY KEY,    Name VARCHAR(100)  );insert into Doctor values(10,'ravi');insert into Doctor values(20,'sai')-- Table: PatientCREATE TABLE Patient (    Patient_ID INT PRIMARY KEY,    Name VARCHAR(100),    Doctor_ID INT,  -- Foreign Key linking to Doctor   constraint fk567 FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID) );insert into Patient values(1001,'santosh',20)-- Table: TreatmentCREATE TABLE Treatment (    Treatment_ID INT PRIMARY KEY,    Patient_ID INT,  -- Foreign Key linking to Patient    Doctor_ID INT,   -- Foreign Key linking to Doctor    constraint fk785   FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID) ,  constraint fk562  FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID) );insert into Treatment values(101,1001,10)
+-- Table: Doctor
+CREATE TABLE Doctor (
+    Doctor_ID INT PRIMARY KEY,
+    Name VARCHAR(100)
+  
+);
+
+insert into Doctor values(10,'ravi');
+insert into Doctor values(20,'sai')
+
+-- Table: Patient
+CREATE TABLE Patient (
+    Patient_ID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Doctor_ID INT,  -- Foreign Key linking to Doctor
+   constraint fk567 FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID) 
+);
+
+insert into Patient values(1001,'santosh',20)
+
+-- Table: Treatment
+CREATE TABLE Treatment (
+    Treatment_ID INT PRIMARY KEY,
+    Patient_ID INT,  -- Foreign Key linking to Patient
+    Doctor_ID INT,   -- Foreign Key linking to Doctor
+   
+ constraint fk785   FOREIGN KEY (Patient_ID) REFERENCES Patient(Patient_ID) ,
+  constraint fk562  FOREIGN KEY (Doctor_ID) REFERENCES Doctor(Doctor_ID) 
+);
+
+insert into Treatment values(101,1001,10)
